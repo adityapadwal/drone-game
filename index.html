@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drone Game</title>
+    <!-- external css -->
+     <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <!-- main container -->
+    <div class="container">
+        <!-- left-gaming-area -->
+        <div class="left-container">
+            <div class="title-container">
+                <h2>Drone Game!</h2>
+            </div>
+            <div class="gaming-container">
+                <div id="game-container" class="game-container"></div>
+            </div>
+        </div>
+        <!-- right-controls-area -->
+        <div class="right-container">
+            <div class="controls-container">
+                <div class="buttons-container">
+                    <div class="first-buttons-div">
+                        <input type="number" class="input-field" id="x-input" placeholder="X" aria-label="X coordinate" min="0" max="9">
+                        <input type="number" class="input-field" id="y-input" placeholder="Y" aria-label="Y coordinate" min="0" max="9">
+                        <button id="place-button">Place</button>
+                    </div>
+                    <div class="second-buttons-div">
+                        <button id="up-button">Up</button>
+                    </div>
+                    <div class="third-buttons-div">
+                        <button id="left-button">Left</button>
+                        <button id="fire-button">Fire</button>
+                        <button id="right-button">Right</button>
+                    </div>
+                    <div class="fourth-buttons-div">
+                        <button id="down-button">Down</button>
+                    </div>
+                    <div class="fifth-buttons-div">
+                        <button id="burst-fire-button">Burst Fire</button>
+                        <button id="change-direction-button">Change Direction</button>
+                        <button id="report-button">Report</button>
+                    </div>
+                </div>
+            </div>
+            <div class="instructions-container">
+                <h3>Instructions:</h3>
+                <ul class="instructions-list">
+                    <div class="instructions-column left-instructions-list">
+                        <li><strong>Up:</strong> ↑</li>
+                        <li><strong>Down:</strong> ↓</li>
+                        <li><strong>Left:</strong> ←</li>
+                        <li><strong>Right:</strong> →</li>
+                    </div>
+                    <div class="instructions-column right-instructions-list">
+                        <li><strong>Fire:</strong> Space</li>
+                        <li><strong>Burst fire:</strong> B</li>
+                        <li><strong>Change Direction:</strong> D</li>
+                        <li><strong>Report:</strong> R</li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- external javascript -->
+     <script src="./script.js"></script>
+</body>
+</html>
