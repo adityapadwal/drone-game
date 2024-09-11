@@ -9,13 +9,15 @@ const fireButton = document.getElementById("fire-button");
 const burstFireButton = document.getElementById("burst-fire-button");
 const changeDirectionButton = document.getElementById("change-direction-button");
 const reportButton = document.getElementById("report-button");
-const bulletSpeed = 1;
-let bullets = [];
+const bulletSpeed = 1; // default bullet speed
+let bullets = []; // holds fired bullets
 const xInput = document.getElementById("x-input");
 const yInput = document.getElementById("y-input");
-let dronePositionX = 0;
-let dronePositionY = 0;
-let droneDirection = "up";
+let dronePositionX = 0; // x co-ordinate of the drone
+let dronePositionY = 0; // y co-ordinate of the drone
+let droneDirection = "north"; // defalt drone direction
+let currentRotation = 0; // initial rottion of the drone
+const audio = new Audio("./assets/sound.mp3");
 
 // create the game-container
 function createGrid(){
@@ -47,14 +49,20 @@ function placeDrone() {
     const cell = gameContainer.children[cellIndex];
 
     if (cell) {
-        const drone = document.createElement("div");
-        drone.classList.add("drone");
+        const droneImage = document.createElement("img");
+        droneImage.src = "./assets/drone.png"; 
+        droneImage.alt = "Drone";
+        droneImage.classList.add("drone");
 
-        drone.style.width = `${cell.offsetWidth}px`;
-        drone.style.height = `${cell.offsetHeight}px`;
-        drone.innerHTML = "⬆️"; // Default direction
+        if(cell.offsetWidth < cell.offsetHeight) {
+            droneImage.style.width = `${cell.offsetWidth}px`;
+            droneImage.style.height = `${cell.offsetWidth}px`;
+        } else {
+            droneImage.style.width = `${cell.offsetHeight}px`;
+            droneImage.style.height = `${cell.offsetHeight}px`;
+        }
 
-        cell.appendChild(drone);
+        cell.appendChild(droneImage);
     }
 }
 
@@ -64,6 +72,7 @@ function moveDroneLeft() {
         removeDrone();
         cellIndex -= 1;
         placeDroneAtIndex(cellIndex);
+        dronePositionX -= 1;
     }
 }
 function moveDroneRight() {
@@ -71,6 +80,7 @@ function moveDroneRight() {
         removeDrone();
         cellIndex += 1;
         placeDroneAtIndex(cellIndex);
+        dronePositionX += 1;
     }
 }
 function moveDroneUp() {
@@ -78,6 +88,7 @@ function moveDroneUp() {
         removeDrone();
         cellIndex -= 10;
         placeDroneAtIndex(cellIndex);
+        dronePositionY += 1;
     }
 }
 function moveDroneDown() {
@@ -85,6 +96,7 @@ function moveDroneDown() {
         removeDrone();
         cellIndex += 10;
         placeDroneAtIndex(cellIndex);
+        dronePositionY -= 1;
     }
 }
 // helper function (remove drone from game-conatiner)
@@ -98,40 +110,93 @@ function removeDrone() {
 // helper function (place drone in game-container)
 function placeDroneAtIndex(cellIndex) {
     const cell = gameContainer.children[cellIndex];
-    if(cell) {
-        const drone = document.createElement("div");
-        drone.classList.add("drone");
+    if (cell) {
+        const droneImage = document.createElement("img");
+        droneImage.src = "./assets/drone.png"; 
+        droneImage.alt = "Drone";
+        droneImage.classList.add("drone");
 
-        drone.style.width = `${cell.offsetWidth}px`;
-        drone.style.height = `${cell.offsetHeight}px`;
-        drone.innerHTML = "⬆️";
+        if(cell.offsetWidth < cell.offsetHeight) {
+            droneImage.style.width = `${cell.offsetWidth}px`;
+            droneImage.style.height = `${cell.offsetWidth}px`;
+        } else {
+            droneImage.style.width = `${cell.offsetHeight}px`;
+            droneImage.style.height = `${cell.offsetHeight}px`;
+        }
 
-        cell.appendChild(drone);
+        droneImage.style.transform = `rotate(${currentRotation}deg)`;
+        cell.appendChild(droneImage);
     }
 }
 
+// fire bullets
 function fireBullet() {
     const drone = document.querySelector(".drone");
     
-    if (!drone) return; // Ensure drone exists
+    if (!drone) return; 
     
     const bullet = document.createElement('div');
     bullet.classList.add("bullet");
 
-    // Get the bounding box of the drone for its position
     const droneRect = drone.getBoundingClientRect();
-    const gameContainerRect = gameContainer.getBoundingClientRect();
     
-    // Set bullet's initial position to the center of the drone
-    bullet.style.left = `${droneRect.left + droneRect.width / 2 - 2}px`;
-    bullet.style.top = `${droneRect.top - 10}px`;
+    bullet.style.left = `${droneRect.left + (droneRect.width/4)}px`;
+    bullet.style.top = `${droneRect.top  + (droneRect.width/4)}px`;
 
     bullet.dataset.direction = droneDirection;
     
     gameContainer.appendChild(bullet);
     bullets.push(bullet);
+    audio.play();
 }
 
+function burstFire() {
+    for (let i = 0; i < 3; i++) {
+        setTimeout(() => {
+            fireBullet();
+        }, i * 100); 
+    }
+}
+
+function changeDroneDirection() {
+    const drone = document.querySelector('.drone');
+
+    if (!drone) return; 
+
+    if (droneDirection === "north") {
+        droneDirection = "east";
+    } else if (droneDirection === "east") {
+        droneDirection = "south";
+    } else if (droneDirection === "south") {
+        droneDirection = "west";
+    } else {
+        droneDirection = "north";
+    }
+
+    currentRotation += 90;
+    drone.style.transform = `rotate(${currentRotation}deg)`;
+    drone.style.transformOrigin = "center";  
+
+    const cell = gameContainer.children[cellIndex];
+    if (cell) {
+        if(cell.offsetWidth < cell.offsetHeight) {
+            droneImage.style.width = `${cell.offsetWidth}px`;
+            droneImage.style.height = `${cell.offsetWidth}px`;
+        } else {
+            droneImage.style.width = `${cell.offsetHeight}px`;
+            droneImage.style.height = `${cell.offsetHeight}px`;
+        }
+    }
+}
+
+function displayDroneReport() {
+    const drone = document.querySelector('.drone');
+    if (!drone) {
+        alert("No drone found :(");
+    } else {
+        alert(`Drone is at position ${dronePositionX},${dronePositionY-9} and direction ${droneDirection}`);
+    }
+}
 
 // on-screen controls
 placeButton.addEventListener("click", () => {
@@ -151,7 +216,16 @@ downButton.addEventListener("click", () => {
 });
 fireButton.addEventListener("click", () => {
     fireBullet();
-})
+});
+burstFireButton.addEventListener("click", () => {
+    burstFire();
+});
+changeDirectionButton.addEventListener("click", () => {
+    changeDroneDirection();
+});
+reportButton.addEventListener("click", () => {
+    displayDroneReport();
+});
 
 // keyboard controls
 function handleKeyboardInputs(event){
@@ -180,6 +254,18 @@ function handleKeyboardInputs(event){
             fireBullet();
             break;
         }
+        case("b"): {
+            burstFire();
+            break;
+        }
+        case("d"): {
+            changeDroneDirection();
+            break;
+        }
+        case("r"): {
+            displayDroneReport();
+            break;
+        }
     }
 }
 window.addEventListener("keydown", handleKeyboardInputs); 
@@ -192,19 +278,19 @@ function updateBullets() {
         let newLeft = parseFloat(bullet.style.left);
 
         switch(direction){
-            case "up": {
+            case "north": {
                 newTop -= bulletSpeed;
                 break;
             }
-            case "down": {
+            case "south": {
                 newTop += bulletSpeed;
                 break;
             }
-            case "left": {
+            case "west": {
                 newLeft -= bulletSpeed;
                 break;
             }
-            case "right": {
+            case "east": {
                 newLeft += bulletSpeed;
                 break;
             }
@@ -214,9 +300,9 @@ function updateBullets() {
         bullet.style.left = `${newLeft}px`;
 
         if (
-            newTop < 0 || 
+            newTop < gameContainer.offsetTop || 
             newTop > gameContainer.offsetHeight || 
-            newLeft < 0 || 
+            newLeft < gameContainer.offsetLeft || 
             newLeft > gameContainer.offsetWidth
         ) {
             bullet.remove();

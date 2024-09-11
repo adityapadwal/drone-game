@@ -1,7 +1,24 @@
-/* fonts */
+/* css variables */
+:root {
+    --primary-bg: #000000; 
+    --primary-text: #ffffff; 
+    --button-bg: #343a40; 
+    --button-border: #495057; 
+    --button-hover-bg: #495057; 
+    --highlight-bg: #007bff; 
+    --highlight-hover-bg: #0056b3;
+    --secondary-highlight-bg: #28a745; 
+    --secondary-highlight-hover-bg: #218838; 
+    --game-container-bg: #212529; 
+    --game-cell-bg: #343a40; 
+    --game-cell-border: #495057;
+    --instructions-bg: #1c1e22;
+    --instructions-text: #ffffff; 
+    --button-text-color: #ffffff; 
+}
 
 /* universal style format */
-*{
+* {
     margin: 0;
     padding: 0;
     border: 0;
@@ -11,163 +28,57 @@
     text-decoration: none;
 }
 
-/* css variables */
-/* todo */
-
+/* container */
 .container {
     height: 100vh;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
 }
 
+/* left-container, right-container */
 .left-container, .right-container {
     position: relative;
     margin: 1rem;
     flex: 1;
-    height: calc(100vh - 2rem); 
-    border: 1px solid;
+    height: calc(100vh - 2rem);
     padding: 1rem;
+    border: 1px solid var(--primary-text);
+    background-color: var(--primary-bg);
 }
 
-.right-container, .left-container {
-    display: flex;
-    flex-direction: column;
-}
-
+/* title-container, gaming-container */
 .title-container {
     height: 10%;
+    background-color: var(--primary-bg);
+    border: none;
+    color: var(--primary-text);
+    font-size: 1.5rem;
+    text-align: center;
 }
 
 .gaming-container {
+    padding: 2rem;
     height: 90%;
+    background-color: var(--game-container-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+/* controls-container and instructions-container */
 .controls-container {
     height: 60%;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center; 
 }
 
-.instructions-container {
-    height: 40%;
-}
-
-.title-container, .controls-container, .instructions-container, .gaming-container {
-    width: 100%; 
-    margin-bottom: 1rem; 
-    border: 1px solid;
-    padding: 1rem;
-}
-
-.title-container, .controls-container, .instructions-container, .gaming-container {
-    margin-bottom: 1rem;
-}
-
-.title-container:last-child, 
-.controls-container:last-child, 
-.instructions-container:last-child, 
-.gaming-container {
-    margin-bottom: 0; 
-}
-
-.title-container {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-align: center;
-    align-content: center;
-}
-
-/* buttons-container and its containing divs*/
-.buttons-container {
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    width: auto;
-    border: 1px solid;
-    padding: 1rem;
-    background-color: #f8f9fa; 
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-.first-buttons-div, .third-buttons-div, .fifth-buttons-div {
-    grid-column: 1 / span 3;
-    display: flex;
-    justify-content: space-between;
-}
-.second-buttons-div, .fourth-buttons-div {
-    grid-column: 2;
-    display: flex;
-    justify-content: center;
-}
-
-/* buttons inside buttons-container */
-button {
-    width: 6rem; 
-    height: 3rem; 
-    margin: 0.25rem;
-    border: 1px solid;
-    border-radius: 10%; 
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
-    font-size: 1rem;
-    cursor: pointer;
-    text-align: center;
-    box-sizing: border-box;
-    transition: background-color 0.3s, transform 0.2s; 
-}
-button:hover {
-    background-color: #e0e0e0; 
-    transform: scale(1.05); 
-}
-
-.input-field {
-    width: 6rem; 
-    height: 3rem; 
-    border: 1px solid;
-    border-radius: 10%; 
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
-    font-size: 1rem;
-    text-align: center;
-    padding: 0 0.5rem;
-}
-
-/* gaming-container and game-container */
-.game-container {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
-    width: 100%;
-    height: 100%;
-    border: 2px solid #000; 
-    background-color: #e0e0e0; 
-}
-
-.game-cell {
-    background-color: #f0f0f0; 
-    border: 1px solid #ddd; 
-}
-
-.drone {
-    position: relative; 
-    background-color: red; 
-    border: 1px solid black; 
-    border-radius: 20%;
-    z-index: 10; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.bullet {
-    position: absolute;
-    width: 5px;
-    height: 10px;
-    background: rgb(0, 0, 0);
-    border-radius: 50%;
-}
-
-/* instructions-container */
 .instructions-container {
     display: flex;
     flex-direction: column;
@@ -176,14 +87,14 @@ button:hover {
     padding: 1rem;
     font-family: Arial, sans-serif;
     font-size: 1rem;
-    color: #333;
+    color: var(--primary-text);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 .instructions-container h3 {
     margin-bottom: 1rem;
     font-size: 1.5rem;
-    color: #444;
+    color: var(--primary-text);
     text-align: center;
 }
 
@@ -216,7 +127,7 @@ button:hover {
     display: inline-block;
     width: 10rem; 
     font-weight: bold;
-    color: #555;
+    color: var(--primary-text);
 }
 
 .instructions-list .instruction-value {
@@ -224,20 +135,142 @@ button:hover {
     color: #666;
 }
 
+/* buttons-container and its containing divs */
+.buttons-container {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    width: auto;
+    padding: 1rem;
+    background-color: var(--primary-bg);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.first-buttons-div, .third-buttons-div, .fifth-buttons-div {
+    grid-column: 1 / span 3;
+    display: flex;
+    justify-content: space-between;
+}
+
+.second-buttons-div, .fourth-buttons-div {
+    grid-column: 2;
+    display: flex;
+    justify-content: center;
+}
+
+/* buttons */
+button {
+    width: 6rem;
+    height: 3rem;
+    margin: 0.25rem;
+    border: 1px solid var(--button-border);
+    border-radius: 8px;
+    background-color: var(--button-bg);
+    color: var(--button-text-color);
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: var(--button-hover-bg);
+    transform: scale(1.05);
+}
+
+#up-button, #left-button, #right-button, #down-button {
+    background-color: var(--highlight-bg);
+    color: var(--button-text-color); 
+}
+
+#up-button:hover, #left-button:hover, #right-button:hover, #down-button:hover {
+    background-color: var(--highlight-hover-bg);
+}
+
+#place-button, #fire-button, #burst-fire-button, #change-direction-button, #report-button {
+    background-color: var(--secondary-highlight-bg);
+    color: var(--button-text-color); 
+}
+
+#place-button:hover, #fire-button:hover, #burst-fire-button:hover, #change-direction-button:hover, #report-button:hover {
+    background-color: var(--secondary-highlight-hover-bg);
+}
+
+/* input fields */
+.input-field {
+    width: 6rem;
+    height: 3rem;
+    border: 1px solid var(--button-border);
+    border-radius: 8px;
+    background-color: var(--secondary-highlight-bg); 
+    color: var(--button-text-color);
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
+    text-align: center;
+    padding: 0 0.5rem;
+}
+::placeholder {
+    color: var(--primary-text);
+}
+
+/* gaming-container and game-container */
+.game-container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+    overflow: hidden;
+    border: 2px solid var(--primary-text);
+    background-color: var(--game-container-bg);
+}
+
+.game-cell {
+    width: 100%;
+    height: 100%;
+    background-color: var(--game-cell-bg);
+    border: 1px solid var(--game-cell-border);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* drone */
+.drone {
+    position: relative;
+    background-color: transparent;
+    border-radius: 20%;
+    z-index: 10;
+}
+
+/* bullet */
+.bullet {
+    position: absolute;
+    width: 5px;
+    height: 10px;
+    background: var(--primary-text);
+    border-radius: 50%;
+}
+
 /* Media query for smaller screens (mobile devices) */
-@media (max-width: 760px) {
-    *{
+@media (max-width: 768px) {
+    * {
         overflow: hidden;
     }
+
     .container {
-        flex-direction: column; 
-        height: auto; 
+        flex-direction: column;
+        height: auto;
     }
 
     .title-container {
-        height: 2rem; 
-        font-size: 0.75rem; 
-        padding: 0.5rem; 
+        height: 2rem;
+        font-size: 1rem;
+        padding: 0.5rem;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -245,24 +278,26 @@ button:hover {
 
     .left-container, 
     .right-container {
-        width: 100%; 
-        height: auto; 
-        margin: 0; 
+        width: 100%;
+        height: auto;
+        margin: 0;
     }
 
     .gaming-container {
-        height: auto; 
-        margin-bottom: 0.5rem;
+        height: auto;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+        padding: 0.5rem;
     }
 
     .game-container {
         height: 15rem;
         width: 100%;
-        max-width: 100%; 
+        max-width: 100%;
     }
 
     .controls-container {
-        height: auto; 
+        height: auto;
         margin-bottom: 1rem;
     }
 
@@ -270,20 +305,20 @@ button:hover {
         display: none;
     }
 
-    /* Adjust button size for smaller screens */
     button {
-        width: 4rem; /* Reduced width */
-        height: 2rem; /* Reduced height */
-        font-size: 0.8rem; /* Reduced font size */
+        width: 4rem;
+        height: 2rem;
+        font-size: 0.8rem;
     }
+
     .first-buttons-div > input {
-        width: 4rem; /* Reduced width */
-        height: 2rem; /* Reduced height */
-        font-size: 0.8rem; /* Reduced font size */
+        width: 4rem;
+        height: 2rem;
+        font-size: 0.8rem;
     }
 
     .buttons-container {
-        grid-template-columns: 1fr; /* Stack buttons in one column */
+        grid-template-columns: 1fr;
     }
 
     .second-buttons-div,
